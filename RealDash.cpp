@@ -65,10 +65,12 @@ void RealDash::setWiFiClient(WiFiClient *client)
  */
 
 void RealDash::loop() {
-    int incoming;
-    while (mClient->available()) {
-        incoming = mClient->read();
-        // just read so that this doesn't blow up for now
+    if (mClient) {
+        int incoming;
+        while (mClient->available()) {
+            incoming = mClient->read();
+            // just read so that this doesn't blow up for now
+        }
     }
 }
 

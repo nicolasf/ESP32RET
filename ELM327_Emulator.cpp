@@ -321,7 +321,8 @@ String ELM327Emu::processELMCmd(char *cmd)
             outFrame.data.byte[3] = pidnum & 0xFF;
         }
         
-        canManager.sendFrame(&CAN0, outFrame);
+// disabled by Nicolas
+//        canManager.sendFrame(&CAN0, outFrame);
     }
 
     retString.concat(lineEnding);

@@ -186,7 +186,9 @@ void CANManager::loop()
             }
             toggleRXLED();
             if ( (incoming.id > 0x7DF && incoming.id < 0x7F0) || elmEmulator.getMonitorMode() ) elmEmulator.processCANReply(incoming);
+            // Serial.printf("CAN%u: incoming %u\n", i, incoming.id);
             realDash.processCANReply(incoming);
+            // Serial.printf("Sent to realDash");
             wifiLength = wifiGVRET.numAvailableBytes();
             serialLength = serialGVRET.numAvailableBytes();
             maxLength = (wifiLength > serialLength) ? wifiLength:serialLength;

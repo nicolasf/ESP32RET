@@ -122,7 +122,7 @@ void loadSettings()
         FastLED.show();
         pinMode(21, OUTPUT);
         digitalWrite(21, LOW);
-        CAN0.setCANPins(GPIO_NUM_4, GPIO_NUM_5);
+        CAN0.setCANPins(GPIO_NUM_26, GPIO_NUM_25);
     }
 
     if (settings.systemType == 1)

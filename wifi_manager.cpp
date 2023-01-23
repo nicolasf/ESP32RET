@@ -100,9 +100,10 @@ void WiFiManager::loop()
                 MDNS.addService("ELM327", "tcp", 1000);// Add service to MDNS-SD
                 wifiServer.begin(23); //setup as a telnet server
                 wifiServer.setNoDelay(true);
-                Serial.println("TCP server started");
+                Serial.println("TCP telnet server started @ 23");
                 wifiOBDII.begin(1000); //setup for wifi linked ELM327 emulation
                 wifiOBDII.setNoDelay(true);
+                Serial.println("TCP OBD2 server started @ 1000");
                 ArduinoOTA.setPort(3232);
                 ArduinoOTA.setHostname(deviceName);
                 // No authentication by default
@@ -111,6 +112,7 @@ void WiFiManager::loop()
                 // RealDash
                 wifiRealDash.begin(35000);
                 wifiRealDash.setNoDelay(true);
+                Serial.println("TCP realdash server started @ 35000");
                 
                 ArduinoOTA
                    .onStart([]() {
@@ -214,7 +216,7 @@ void WiFiManager::loop()
                             {
                                 Serial.print("New wifi RealDash client: ");
                                 Serial.print(i); Serial.print(' ');
-                                Serial.println(SysSettings.wifiOBDClients[i].remoteIP());
+                                Serial.println(SysSettings.wifiRealDashClients[i].remoteIP());
                             }
                         }
                     }
@@ -282,17 +284,6 @@ void WiFiManager::loop()
                     if (SysSettings.wifiRealDashClients[i] && SysSettings.wifiRealDashClients[i].connected())
                     {
                         realDash.setWiFiClient(&SysSettings.wifiRealDashClients[i]);
-                        /*if(SysSettings.wifiOBDClients[i].available())
-                        {
-                            //get data from the telnet client and push it to input processing
-                            while(SysSettings.wifiOBDClients[i].available()) 
-                            {
-                                uint8_t inByt;
-                                inByt = SysSettings.wifiOBDClients[i].read();
-                                SysSettings.isWifiActive = true;
-                                //wifiGVRET.processIncomingByte(inByt);
-                            }
-                        }*/
                     }
                     else
                     {

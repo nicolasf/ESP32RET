@@ -18,6 +18,9 @@ public:
     void sendString(String str);
     void sendCharString(char *str);
 
+private:
+    uint32_t Crc32(const uint8_t* data, int start, int numBytes);
+
 protected:
     byte transmitBuffer[WIFI_BUFF_SIZE];
     int transmitBufferLength; //not creating a ring buffer. The buffer should be large enough to never overflow
