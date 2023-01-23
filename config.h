@@ -35,6 +35,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "esp32_can.h"
 #include <Preferences.h>
 
+#define SER_BAUD_RATE   921600
+// #define SER_BAUD_RATE   1000000
+
 //size to use for buffering writes to USB. On the ESP32 we're actually talking TTL serial to a TTL<->USB chip
 #define SER_BUFF_SIZE       1024
 
@@ -132,6 +135,7 @@ struct SystemSettings {
     int8_t numBuses; //number of buses this hardware currently supports.
     WiFiClient clientNodes[MAX_CLIENTS];
     WiFiClient wifiOBDClients[MAX_CLIENTS];
+    WiFiClient wifiRealDashClients[MAX_CLIENTS];
     boolean isWifiConnected;
     boolean isWifiActive;
 };
@@ -141,6 +145,7 @@ class SerialConsole;
 class CANManager;
 class LAWICELHandler;
 class ELM327Emu;
+class RealDash;
 
 extern EEPROMSettings settings;
 extern SystemSettings SysSettings;
@@ -151,6 +156,7 @@ extern SerialConsole console;
 extern CANManager canManager;
 extern LAWICELHandler lawicel;
 extern ELM327Emu elmEmulator;
+extern RealDash realDash;
 extern char deviceName[20];
 extern char otaHost[40];
 extern char otaFilename[100];

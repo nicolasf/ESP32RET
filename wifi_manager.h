@@ -16,6 +16,7 @@ public:
 private:
     WiFiServer wifiServer;
     WiFiServer wifiOBDII;
+    WiFiServer wifiRealDash;
     WiFiClient wifiClient;
     WiFiUDP wifiUDPServer;
     uint32_t lastBroadcast;

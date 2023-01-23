@@ -6,6 +6,7 @@
 #include "gvret_comm.h"
 #include "lawicel.h"
 #include "ELM327_Emulator.h"
+#include "RealDash.h"
 
 CANManager::CANManager()
 {
@@ -185,6 +186,7 @@ void CANManager::loop()
             }
             toggleRXLED();
             if ( (incoming.id > 0x7DF && incoming.id < 0x7F0) || elmEmulator.getMonitorMode() ) elmEmulator.processCANReply(incoming);
+            realDash.processCANReply(incoming);
             wifiLength = wifiGVRET.numAvailableBytes();
             serialLength = serialGVRET.numAvailableBytes();
             maxLength = (wifiLength > serialLength) ? wifiLength:serialLength;

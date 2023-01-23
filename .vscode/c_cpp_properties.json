@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/nicolas/.platformio/packages/framework-arduinoespressif32/cores/esp32",
+                "/home/nicolas/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/**",
+                "/home/nicolas/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
+                "/home/nicolas/.platformio/packages/toolchain-xtensa-esp32/xtensa-esp32-elf/include",
+                "/home/nicolas/.platformio/packages/framework-arduinoespressif32/variants/esp32"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

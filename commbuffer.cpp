@@ -138,3 +138,22 @@ void CommBuffer::sendFrameToBuffer(CAN_FRAME_FD &frame, int whichBus)
     }
 }
 
+void CommBuffer::sendFrameToBufferRealDash(CAN_FRAME &frame)
+{
+    uint8_t temp;
+    size_t writtenBytes;
+    // if (frame.extended) frame.id |= 1 << 31;
+    transmitBuffer[transmitBufferLength++] = 0x44;
+    transmitBuffer[transmitBufferLength++] = 0x33;
+    transmitBuffer[transmitBufferLength++] = 0x22;
+    transmitBuffer[transmitBufferLength++] = 0x11;
+    transmitBuffer[transmitBufferLength++] = (uint8_t)(frame.id & 0xFF);
+    transmitBuffer[transmitBufferLength++] = (uint8_t)(frame.id >> 8);
+    transmitBuffer[transmitBufferLength++] = (uint8_t)(frame.id >> 16);
+    transmitBuffer[transmitBufferLength++] = (uint8_t)(frame.id >> 24);
+    for (int c = 0; c < frame.length; c++) {
+        transmitBuffer[transmitBufferLength++] = frame.data.uint8[c];
+    }
+}    
+
+

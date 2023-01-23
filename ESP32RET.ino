@@ -25,12 +25,14 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+#include <Arduino.h>
 #include "config.h"
 #include <esp32_can.h>
 #include <SPI.h>
 #include <Preferences.h>
 #include <FastLED.h>
 #include "ELM327_Emulator.h"
+#include "RealDash.h"
 #include "SerialConsole.h"
 #include "wifi_manager.h"
 #include "gvret_comm.h"
@@ -54,6 +56,8 @@ char otaFilename[100];
 uint8_t espChipRevision;
 
 ELM327Emu elmEmulator;
+
+RealDash realDash;
 
 WiFiManager wifiManager;
 
@@ -243,7 +247,7 @@ void setup()
 
     espChipRevision = ESP.getChipRevision();
 
-    Serial.begin(1000000); //for production
+    Serial.begin(SER_BAUD_RATE); //for production
     //Serial.begin(115200); //for testing
 
     SysSettings.isWifiConnected = false;
@@ -358,4 +362,5 @@ void loop()
     }
 
     elmEmulator.loop();
+    realDash.loop();
 }

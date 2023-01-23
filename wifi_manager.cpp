@@ -7,6 +7,7 @@
 #include <WiFi.h>
 #include <FastLED.h>
 #include "ELM327_Emulator.h"
+#include "RealDash.h"
 
 extern CRGB leds[A5_NUM_LEDS];
 
@@ -106,6 +107,10 @@ void WiFiManager::loop()
                 ArduinoOTA.setHostname(deviceName);
                 // No authentication by default
                 //ArduinoOTA.setPassword("admin");
+
+                // RealDash
+                wifiRealDash.begin(35000);
+                wifiRealDash.setNoDelay(true);
                 
                 ArduinoOTA
                    .onStart([]() {
@@ -196,6 +201,29 @@ void WiFiManager::loop()
                     }
                 }
 
+                if (wifiRealDash.hasClient())
+                {
+                    for(i = 0; i < MAX_CLIENTS; i++)
+                    {
+                        if (!SysSettings.wifiRealDashClients[i] || !SysSettings.wifiRealDashClients[i].connected())
+                        {
+                            if (SysSettings.wifiRealDashClients[i]) SysSettings.wifiRealDashClients[i].stop();
+                            SysSettings.wifiRealDashClients[i] = wifiRealDash.available();
+                            if (!SysSettings.wifiRealDashClients[i]) Serial.println("Couldn't accept client connection!");
+                            else 
+                            {
+                                Serial.print("New wifi RealDash client: ");
+                                Serial.print(i); Serial.print(' ');
+                                Serial.println(SysSettings.wifiOBDClients[i].remoteIP());
+                            }
+                        }
+                    }
+                    if (i >= MAX_CLIENTS) {
+                        //no free/disconnected spot so reject
+                        wifiRealDash.available().stop();
+                    }
+                }
+
                 //check clients for data
                 for(i = 0; i < MAX_CLIENTS; i++)
                 {
@@ -250,6 +278,30 @@ void WiFiManager::loop()
                             elmEmulator.setWiFiClient(0);
                         }
                     }
+
+                    if (SysSettings.wifiRealDashClients[i] && SysSettings.wifiRealDashClients[i].connected())
+                    {
+                        realDash.setWiFiClient(&SysSettings.wifiRealDashClients[i]);
+                        /*if(SysSettings.wifiOBDClients[i].available())
+                        {
+                            //get data from the telnet client and push it to input processing
+                            while(SysSettings.wifiOBDClients[i].available()) 
+                            {
+                                uint8_t inByt;
+                                inByt = SysSettings.wifiOBDClients[i].read();
+                                SysSettings.isWifiActive = true;
+                                //wifiGVRET.processIncomingByte(inByt);
+                            }
+                        }*/
+                    }
+                    else
+                    {
+                        if (SysSettings.wifiRealDashClients[i])
+                        {
+                            SysSettings.wifiRealDashClients[i].stop();
+                            realDash.setWiFiClient(0);
+                        }
+                    }                    
                 }                    
             }
             else 
