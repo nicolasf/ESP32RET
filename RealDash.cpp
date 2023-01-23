@@ -90,7 +90,15 @@ void RealDash::sendTxBuffer()
 
 void RealDash::processCANReply(CAN_FRAME &frame)
 {
-    // send realdash can frame
-    txBuffer.sendFrameToBufferRealDash(frame);
-    sendTxBuffer();
+    // whitelist
+    if (frame.id == 289
+        || frame.id == 253
+        || frame.id == 167
+        || frame.id == 168) {
+
+        // send realdash can frame
+        txBuffer.sendFrameToBufferRealDash(frame);
+        sendTxBuffer();
+
+    }
 }
