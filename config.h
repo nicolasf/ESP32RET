@@ -83,6 +83,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //How many devices to allow to connect to our WiFi telnet port?
 #define MAX_CLIENTS 1
 
+// FIXME: hardcoded config
+#define USE_GVRET 0
+
 struct FILTER {  //should be 10 bytes
     uint32_t id;
     uint32_t mask;

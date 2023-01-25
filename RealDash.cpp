@@ -94,7 +94,13 @@ void RealDash::processCANReply(CAN_FRAME &frame)
     if (frame.id == 289
         || frame.id == 253
         || frame.id == 167
-        || frame.id == 168) {
+        || frame.id == 168
+        || frame.id == 257
+        || frame.id == 1600
+        || frame.id == 870
+        || frame.id == 262
+        || frame.id == 1719
+        || frame.id == 173) {
 
         // send realdash can frame
         txBuffer.sendFrameToBufferRealDash(frame);

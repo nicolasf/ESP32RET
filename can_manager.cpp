@@ -126,8 +126,10 @@ void CANManager::displayFrame(CAN_FRAME &frame, int whichBus)
     } 
     else 
     {
-        if (SysSettings.isWifiActive) wifiGVRET.sendFrameToBuffer(frame, whichBus);
-        else serialGVRET.sendFrameToBuffer(frame, whichBus);
+        if (USE_GVRET) {
+            if (SysSettings.isWifiActive) wifiGVRET.sendFrameToBuffer(frame, whichBus);
+            else serialGVRET.sendFrameToBuffer(frame, whichBus);
+        }
     }
 }
 
@@ -139,8 +141,10 @@ void CANManager::displayFrame(CAN_FRAME_FD &frame, int whichBus)
     } 
     else 
     {
-        if (SysSettings.isWifiActive) wifiGVRET.sendFrameToBuffer(frame, whichBus);
-        else serialGVRET.sendFrameToBuffer(frame, whichBus);
+        if (USE_GVRET) {
+            if (SysSettings.isWifiActive) wifiGVRET.sendFrameToBuffer(frame, whichBus);
+            else serialGVRET.sendFrameToBuffer(frame, whichBus);
+        }
     }
 }
 
